@@ -1,10 +1,9 @@
-from flask import Flask,jsonify
-from flask import request
+from flask import Flask,jsonify,request,render_template
 from flask_cors import CORS
 import sqlite3
 from sqlite3 import Error
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='../frontend')
 CORS(app)
 db_file="sqliteUserData.db"
 
@@ -43,6 +42,9 @@ def create_connection():
     except Error as e:
         print(e)
 
+@app.route("/",methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route("/add_travel",methods=["POST"])
 def add_travel():
